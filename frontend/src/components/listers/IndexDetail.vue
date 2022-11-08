@@ -5,6 +5,12 @@
         </v-card-title>
 
         <v-card-text>
+            <div>
+                <String label="Fileid" v-model="item.fileid" :editMode="editMode" @change="change" />
+            </div>
+            <div>
+                <String label="Keywords" v-model="item.keywords" :editMode="editMode" @change="change" />
+            </div>
         </v-card-text>
 
         <v-card-actions>

@@ -10,10 +10,14 @@
                     <v-list-item-content>
                         <v-list-item-title style="margin-bottom:10px;">
                             
+                            
+                            
                         </v-list-item-title>
 
                         <v-list-item-subtitle style="font-size:25px; font-weight:700;">
                             [ Id :  {{data.id }} ] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            [ Message :  {{data.message }} ] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            [ UserId :  {{data.userId }} ] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </v-list-item-subtitle>
 
                     </v-list-item-content>
@@ -47,7 +51,7 @@
                         </v-fab-transition>
                     </template>
 
-                    <Notification :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
+                    <NotificationHistory :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
                 
                     <v-btn
                             style="postition:absolute; top:2%; right:2%"
@@ -66,12 +70,12 @@
 
 <script>
     const axios = require('axios').default;
-    import Notification from './../Notification.vue';
+    import NotificationHistory from './../NotificationHistory.vue';
 
     export default {
-        name: 'NotificationManager',
+        name: 'NotificationHistoryManager',
         components: {
-            Notification,
+            NotificationHistory,
         },
         props: {
             offline: Boolean,
@@ -90,11 +94,13 @@
                 return;
             } 
 
-            var temp = await axios.get(axios.fixUrl('/notifications'))
-            temp.data._embedded.notifications.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
-            this.values = temp.data._embedded.notifications;
+            var temp = await axios.get(axios.fixUrl('/notificationhistories'))
+            temp.data._embedded.notificationhistories.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
+            this.values = temp.data._embedded.notificationhistories;
             
             this.newValue = {
+                'message': '',
+                'userId': '',
             }
         },
         methods: {

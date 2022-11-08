@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 @RestController
-// @RequestMapping(value="/notifications")
+// @RequestMapping(value="/notificationHistories")
 @Transactional
-public class NotificationController {
+public class NotificationHistoryController {
     @Autowired
-    NotificationRepository notificationRepository;
+    NotificationHistoryRepository notificationHistoryRepository;
 
 
 

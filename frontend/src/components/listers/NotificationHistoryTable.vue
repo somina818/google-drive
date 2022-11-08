@@ -31,7 +31,7 @@
                         </v-fab-transition>
                     </template>
 
-                    <Notification :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
+                    <NotificationHistory :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
                 
                     <v-btn
                             style="postition:absolute; top:2%; right:2%"
@@ -50,12 +50,12 @@
 
 <script>
     const axios = require('axios').default;
-    import Notification from './../Notification.vue';
+    import NotificationHistory from './../NotificationHistory.vue';
 
     export default {
-        name: 'NotificationManager',
+        name: 'NotificationHistoryManager',
         components: {
-            Notification,
+            NotificationHistory,
         },
         props: {
             offline: Boolean,
@@ -67,8 +67,10 @@
             headers: 
                 [
                     { text: "id", value: "id" },
+                    { text: "message", value: "message" },
+                    { text: "userId", value: "userId" },
                 ],
-            notification : [],
+            notificationHistory : [],
             newValue: {},
             tick : true,
             openDialog : false,
@@ -79,11 +81,13 @@
                 return;
             }
 
-            var temp = await axios.get(axios.fixUrl('/notifications'))
-            temp.data._embedded.notifications.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
-            this.values = temp.data._embedded.notifications;
+            var temp = await axios.get(axios.fixUrl('/notificationhistories'))
+            temp.data._embedded.notificationhistories.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
+            this.values = temp.data._embedded.notificationhistories;
 
             this.newValue = {
+                'message': '',
+                'userId': '',
             }
         },
         methods: {

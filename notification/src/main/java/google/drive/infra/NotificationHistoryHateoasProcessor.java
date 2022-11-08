@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.hateoas.EntityModel;
 
 @Component
-public class NotificationHateoasProcessor implements RepresentationModelProcessor<EntityModel<Notification>>  {
+public class NotificationHistoryHateoasProcessor implements RepresentationModelProcessor<EntityModel<NotificationHistory>>  {
 
     @Override
-    public EntityModel<Notification> process(EntityModel<Notification> model) {
+    public EntityModel<NotificationHistory> process(EntityModel<NotificationHistory> model) {
 
         
         return model;

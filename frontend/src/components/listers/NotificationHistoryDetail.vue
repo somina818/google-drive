@@ -1,10 +1,16 @@
 <template>
     <v-card outlined>
         <v-card-title>
-            Notification # {{item._links.self.href.split("/")[item._links.self.href.split("/").length - 1]}}
+            NotificationHistory # {{item._links.self.href.split("/")[item._links.self.href.split("/").length - 1]}}
         </v-card-title>
 
         <v-card-text>
+            <div>
+                <String label="Message" v-model="item.message" :editMode="editMode" @change="change" />
+            </div>
+            <div>
+                <String label="UserId" v-model="item.userId" :editMode="editMode" @change="change" />
+            </div>
         </v-card-text>
 
         <v-card-actions>
@@ -51,7 +57,7 @@
     const axios = require('axios').default;
 
     export default {
-        name: 'NotificationDetail',
+        name: 'NotificationHistoryDetail',
         components:{},
         props: {
         },
@@ -62,7 +68,7 @@
         async created() {
             var me = this;
             var params = this.$route.params;
-            var temp = await axios.get(axios.fixUrl('/notifications/' + params.id))
+            var temp = await axios.get(axios.fixUrl('/notificationHistories/' + params.id))
             if(temp.data) {
                 me.item = temp.data
             }

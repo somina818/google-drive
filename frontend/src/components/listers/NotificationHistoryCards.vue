@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 style = "margin-left:4.5%; margin-top:-10px;">Notification</h1>
+        <h1 style = "margin-left:4.5%; margin-top:-10px;">NotificationHistory</h1>
         <v-col style="margin-bottom:40px;">
             <div class="text-center">
                 <v-dialog
@@ -10,7 +10,7 @@
                         hide-overlay
                         transition="dialog-bottom-transition"
                 >
-                    <Notification :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" 
+                    <NotificationHistory :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" 
                             @add="append" v-if="tick"/>
 
                     <v-btn
@@ -33,7 +33,7 @@
             </div>
         </v-col>
         <v-row>
-            <Notification :offline="offline" class="video-card" v-for="(value, index) in values" v-model="values[index]" v-bind:key="index" @delete="remove"/>
+            <NotificationHistory :offline="offline" class="video-card" v-for="(value, index) in values" v-model="values[index]" v-bind:key="index" @delete="remove"/>
         </v-row>
     </div>
 </template>
@@ -41,12 +41,12 @@
 <script>
 
     const axios = require('axios').default;
-    import Notification from './../Notification.vue';
+    import NotificationHistory from './../NotificationHistory.vue';
 
     export default {
-        name: 'NotificationManager',
+        name: 'NotificationHistoryManager',
         components: {
-            Notification,
+            NotificationHistory,
         },
         props: {
             offline: Boolean
@@ -64,10 +64,12 @@
                 return;
             } 
 
-            var temp = await axios.get(axios.fixUrl('/notifications'))
-            me.values = temp.data._embedded.notifications;
+            var temp = await axios.get(axios.fixUrl('/notificationHistories'))
+            me.values = temp.data._embedded.notificationHistories;
             
             me.newValue = {
+                'message': '',
+                'userId': '',
             }
         },
         methods:{

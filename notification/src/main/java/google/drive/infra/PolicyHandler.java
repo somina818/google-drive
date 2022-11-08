@@ -18,7 +18,7 @@ import google.drive.domain.*;
 @Service
 @Transactional
 public class PolicyHandler{
-    @Autowired NotificationRepository notificationRepository;
+    @Autowired NotificationHistoryRepository notificationHistoryRepository;
     
     @StreamListener(KafkaProcessor.INPUT)
     public void whatever(@Payload String eventString){}
@@ -33,7 +33,7 @@ public class PolicyHandler{
         
 
         // Sample Logic //
-        Notification.sendNotification(event);
+        NotificationHistory.sendNotification(event);
         
 
         
@@ -49,7 +49,7 @@ public class PolicyHandler{
         
 
         // Sample Logic //
-        Notification.sendNotification(event);
+        NotificationHistory.sendNotification(event);
         
 
         

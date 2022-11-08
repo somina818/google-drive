@@ -14,6 +14,12 @@
                         <v-list-item-content>
                             <v-list-item-title>
                             </v-list-item-title>
+                            <v-list-item-subtitle>
+                                Message :  {{item.message }}
+                            </v-list-item-subtitle>
+                            <v-list-item-subtitle>
+                                UserId :  {{item.userId }}
+                            </v-list-item-subtitle>
                         </v-list-item-content>
 
                         <v-list-item-action>
@@ -31,7 +37,7 @@
     const axios = require('axios').default;
 
     export default {
-        name: 'NotificationPicker',
+        name: 'NotificationHistoryPicker',
         props: {
             value: [String, Object, Array, Number, Boolean],
         },
@@ -41,14 +47,14 @@
         }),
         async created() {
             var me = this;
-            var temp = await axios.get(axios.fixUrl('/notifications'))
+            var temp = await axios.get(axios.fixUrl('/notificationHistories'))
             if(temp.data) {
-                me.list = temp.data._embedded.notifications;
+                me.list = temp.data._embedded.notificationHistories;
             }
 
             if(me.value && typeof me.value == "object" && Object.values(me.value)[0]) {
                 var id = Object.values(me.value)[0];
-                var tmpValue = await axios.get(axios.fixUrl('/notifications/' + id))
+                var tmpValue = await axios.get(axios.fixUrl('/notificationHistories/' + id))
                 if(tmpValue.data) {
                     var val = tmpValue.data
                     me.list.forEach(function(item, idx) {
@@ -65,6 +71,10 @@
                 if(val != undefined) {
                     var arr = this.list[val]._links.self.href.split('/');
                     obj['id'] = arr[4]; 
+                    
+                    
+                    
+                    
                     
                     this.$emit('selected', obj);
                 }
